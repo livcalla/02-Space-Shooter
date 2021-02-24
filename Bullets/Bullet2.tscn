@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Bullets/Bullet2.gd" type="Script" id=1]
+[ext_resource path="res://Assets/New/Laser_Red.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 100.0
+
+[node name="Bullet2" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.6, 0.6 )
+texture = ExtResource( 2 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2( 0.5, 0.5 )
+polygon = PoolVector2Array( 18.5, -3.6, 17.5, -2.9, 17.5, 2, 18.2, 2, 18.5, 4.1, 18.5, 18, 4.1, 18, 3.4, 17, -2.4, 17, -3.1, 18, -18.5, 18, -18.5, 4.5, -16.5, 3, -16.5, -3, -18.5, -4.5, -18.5, -18, -2.6, -18, 2.5, -17.3, 4.6, -18, 18.5, -18 )
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
